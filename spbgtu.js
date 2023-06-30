@@ -1,16 +1,24 @@
 javascript: (() => {
-    //const documentHTML = document.documentElement.outerHTML;
-    const matches = document.getElementsByClassName("enroll-lists-table__table");
 
-    for (let item of matches){
-        item.innerHTML = "<b>XXX</b>"
-    }
+    // const matches = document.getElementsByClassName("enroll-lists-table__table");
 
- 
-    // const flatMatches = Array.from(matches).map((item) => item[0]);
-    // const uniqueMatches = Array.from(new Set(flatMatches));
-    // // if (uniqueMatches.length > 0) {
-    //     const result = uniqueMatches.join(% 27\n % 27); alert(result);
-    // } else { alert(% 27No emails found! % 27); }
+    // for (let item of matches){
+    //     item.innerHTML = "<b>XXX</b>"
+    // }
+
+    const getCellValue = (tr, idx) => tr.children[idx].innerText || tr.children[idx].textContent;
+
+    const comparer = (idx, asc) => (a, b) => ((v1, v2) =>
+        v1 !== '' && v2 !== '' && !isNaN(v1) && !isNaN(v2) ? v1 - v2 : v1.toString().localeCompare(v2)
+    )(getCellValue(asc ? a : b, idx), getCellValue(asc ? b : a, idx));
+
+    // do the work...
+    document.querySelectorAll('th').forEach(th => th.addEventListener('click', (() => {
+        const table = th.closest('table');
+        Array.from(table.querySelectorAll('tr:nth-child(n+2)'))
+            .sort(comparer(Array.from(th.parentNode.children).indexOf(th), this.asc = !this.asc))
+            .forEach(tr => table.appendChild(tr));
+    })));
+
 
 })();
