@@ -1,0 +1,1 @@
+ javascript: (() => { const matches = document.getElementsByClassName(%27enroll-lists-table__table%27);  for (let item of matches){ item.innerHTML = %27<b>XXX</b>%27 }    })();
